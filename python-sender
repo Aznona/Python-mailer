@@ -1,0 +1,28 @@
+#The Python script that would automatically send an email to the specified email address at the specified time interval.
+import smtplib
+import schedule
+import time
+
+# Define the email content
+def send_email():
+    sender_email = "your_email@gmail.com"
+    receiver_email = "recipient_email@gmail.com"
+    password = "your_email_password"
+    message = "Subject: Good morning!\n\nThis is an automated message to say good morning!"
+
+    # Send the email
+    with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
+        connection.starttls()
+        connection.login(user=sender_email, password=password)
+        connection.sendmail(from_addr=sender_email, to_addrs=receiver_email, msg=message)
+
+# Schedule the email to be sent at 8:00 am every day
+schedule.every().day.at("08:00").do(send_email)
+
+# Schedule the email to be sent at 11:00 pm every day
+schedule.every().day.at("23:00").do(lambda: print("Good night!"))
+
+# Run the scheduler
+while True:
+    schedule.run_pending()
+    time.sleep(1)
