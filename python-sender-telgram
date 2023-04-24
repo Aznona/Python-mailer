@@ -1,0 +1,24 @@
+import telegram
+import schedule
+import time
+
+# Define the message content
+def send_telegram_message():
+    bot_token = "your_bot_token"
+    chat_id = "your_chat_id"
+    message = "Good morning!"
+
+    # Send the message
+    bot = telegram.Bot(token=bot_token)
+    bot.send_message(chat_id=chat_id, text=message)
+
+# Schedule the message to be sent at 8:00 am every day
+schedule.every().day.at("08:00").do(send_telegram_message)
+
+# Schedule the message to be sent at 11:00 pm every day
+schedule.every().day.at("23:00").do(lambda: print("Good night!"))
+
+# Run the scheduler
+while True:
+    schedule.run_pending()
+    time.sleep(1)
